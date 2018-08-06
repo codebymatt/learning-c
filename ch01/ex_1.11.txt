@@ -1,0 +1,21 @@
+Q: How would you test the word count program?
+
+A: 
+
+We of course would use normal input to test for the 'happy path',
+so for example 'The quick brown fox jumped over the lazy dog'.
+
+We would then want to try to break it by testing edge cases.
+
+The first of these would be single characters ('c', 'z'), followed
+by special characters ('\n', '\t', etc) which shouldn't be counted
+as words.
+
+We'd also want to test multiple spaces, multiple tabs, as well as
+one long unbroken string of characters.
+
+This could get more and more expansive depending on how thorough you
+want to be. As with unit tests, it's up to the programmer on what
+cases you want to catch, and how creative you want to be. In the
+interest of progression, I'm not going to spend my Saturday afternoon
+dreaming of more edge cases.
