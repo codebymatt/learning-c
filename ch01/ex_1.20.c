@@ -1,8 +1,3 @@
-// FOR FUTURE MATT: When this program is terminated (with ^D or EOF in an actual
-// file), the first letter of the most recent input line is always displayed.
-// WHY DOES THIS HAPPEN. I'm guessing there's an issue with string/char array
-// storage, but I acn't figure out why and I'm sinking too much time in.
-
 #include <stdio.h>
 #define MAXLENGTH 4096
 
@@ -20,16 +15,13 @@ int get_line(char line[], int limit);
 
 int main()
 {
-    int c = 0;
-    
-    while (c != EOF) {
-        char tabbed_line[MAXLENGTH];
-        char spaced_line[MAXLENGTH + TABNUM*TABLENGTH];
-        
-        c = get_line(tabbed_line, MAXLENGTH);
+    int length;
+    char tabbed_line[MAXLENGTH];
+    char spaced_line[MAXLENGTH];
+
+    while ((length = get_line(tabbed_line, MAXLENGTH)) > 0) {
         replace_tabs_with_spaces(tabbed_line, spaced_line);
-        
-        printf("%s\n", spaced_line);    
+        printf("%s", spaced_line);    
     }
 
     return 0;
@@ -52,7 +44,7 @@ int get_line(char line[], int limit)
     
     line[count] = '\0';
 
-    return c;
+    return count;
 }
 
 void replace_tabs_with_spaces(char tabbed[], char spaced[])
@@ -73,5 +65,5 @@ void replace_tabs_with_spaces(char tabbed[], char spaced[])
         }
     }
 
-    spaced[s+1] = '\0';
+    spaced[s] = '\0';
 }
