@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+/* The first comment */
+
+int main()
+{
+    int i; /* The second comment */
+    for (i = 0; i < 10; i++) {
+        printf("%d", /* The third comment goes here */i);
+    }
+    return 0;
+}
