@@ -12,10 +12,13 @@ int main()
     printf("range of signed short:      %d to %d\n", SHRT_MIN, SHRT_MAX);
     printf("range of unsigned short:    %d to %d\n\n", 0, USHRT_MAX);
 
+    printf("range of signed int:        %d to %d\n", INT_MIN, INT_MAX);
+    printf("range of unsigned int:      %d to %u\n\n", 0, UINT_MAX);
+
     printf("range of signed long:       %ld to %ld\n", LONG_MIN, LONG_MAX);
     printf("range of unsigned long:     %d to %lu\n\n", 0, ULONG_MAX);
     
-    printf("range of signed double:     %lf to %lf\n\n", DBL_MIN, DBL_MAX);
+    printf("range of signed float:      %e to %e\n\n", FLT_MIN, FLT_MAX);
+    printf("range of signed double:     %e to %e\n\n", DBL_MIN, DBL_MAX);
 
-    printf("Range of several variable types in C (computed):\n\n");
 }
