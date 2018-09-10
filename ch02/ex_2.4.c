@@ -1,13 +1,12 @@
 #include <stdio.h>
-#define MAXLENGTH 1000
 
 void squeeze(char s1[], char s2[]);
 int char_in_string(char c, char s[]);
 
 int main()
 {
-    char s1[MAXLENGTH] = "The quick brown fox jumped over the lazy dog";
-    char s2[MAXLENGTH] = "quickbrown";
+    char s1[] = "The quick brown fox jumped over the lazy dog";
+    char s2[] = "quickbrown";
     squeeze(s1, s2);
     printf("%s\n", s1); 
 }
