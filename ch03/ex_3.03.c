@@ -11,7 +11,7 @@ int main()
     char input[MAXLENGTH];
     char output[MAXLENGTH];
 
-    scanf("%s", input);
+    fgets(input, MAXLENGTH, stdin);
     escape(input, output);
 
     printf("%s\n", output);
@@ -22,31 +22,37 @@ int main()
 void escape(char s1[], char s2[])
 {
     int i = 0;
-    int k = 0;
+    int j = 0;
     int len = strlen(s1);
 
-    if ( len < 3) {
-        return;
-    }
-
-    while(i < len - 2) {
-        if((s1[i+1] == '-') && (isalnum(s1[i])) && (isalnum(s1[i+2]))) {
-            // s2[k++] = s1[i];
-            if (s1[i] < s1[i+2]) {
-                for (int j = s1[i]; j <= s1[i+2]; j++) {
-                    s2[k++] = j;
-                }
-                i += 3;
-            } else {
-                s2[k++] = s1[i++];
-            }
-        } else {
-            s2[k++] = s1[i++];
+    if (len < 3) {
+        for (int k=0; k<len; k++) {
+            s2[j++] = s1[i++];
         }
     }
 
-    while(i < len) {
-        s2[k++] = s1[i++];
+    while( i < len - 2) {
+        if( isalnum(s1[i]) && (s1[i+1] == '-') && isalnum(s1[i+2])) {
+            int low = s1[i];
+            int high = s1[i+2];
+            if (low < high) {
+                for(int k = low; k <= high; k++) {
+                    s2[j++] = k;
+                }
+                i += 3;
+            } else {
+                for(int k = 3; k > 0; k--) {
+                    s2[j++] = s1[i++];
+                }
+            }
+        } else {
+            s2[j++] = s1[i++];
+        }
     }
-    s2[k] = '\0'; 
+
+    while(s1[i] != '\0') {
+        s2[j++] = s1[i++];
+    }
+
+    s2[j] = '\0';
 }
