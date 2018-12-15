@@ -42,6 +42,10 @@ int main()
                     printf("error: zero divisor\n");
                 }
                 break;
+            case '%':
+                op2 = pop();
+                push((int)pop() % (int)op2);
+                break;
             case '\n':
                 printf("\t%.8g\n", pop());
                 break;
@@ -87,7 +91,6 @@ int getop(char s[])
         return c;
     }
 
-    i = 0;
     if (isdigit(c)) {
         while (isdigit(s[++i] = c = getch()))
             ;
