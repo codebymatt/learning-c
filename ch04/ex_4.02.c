@@ -53,7 +53,7 @@ double atofl(char s[])
             i++;
         }
 
-        // Probably didn't need this, only handles e-6,
+        // Probably didn't need this, only handles e-6 (that's the precision of a float),
         // so could error for smaller/larger exponent values
         exp = atoi(&s[i]);
 
