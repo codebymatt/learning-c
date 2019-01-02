@@ -12,7 +12,7 @@ void push(double);
 double pop(void);
 
 void peek(void);
-void duplicate_stack(char [], char[]);
+void duplicate_stack(double []);
 void swap_top(void);
 void clear_stack(void);
 
@@ -158,7 +158,28 @@ void peek(void)
     printf("Top of stack is: %f\n", val[sp]);
   } else {
     printf("error: stack empty\n");
-    return 0.0;
+  }
+}
+
+void duplicate_stack(double dup[])
+{
+  int i = 0;
+  while (val[i] != '\0') {
+    dup[i] = val[i];
+  }
+}
+
+void swap(void)
+{
+  int temp = val[sp];
+  val[sp] = val[sp - 1];
+  val[sp - 1] = temp;
+}
+
+void clear_stack(void)
+{
+  while(sp > -1) {
+    val[sp--] = 0;
   }
 }
 
