@@ -11,6 +11,9 @@ int getop(char []);
 void push(double);
 double pop(void);
 
+float sign = 1.0;
+float num_string;
+
 int main()
 {
   int type;
@@ -20,7 +23,8 @@ int main()
   while((type = getop(s)) != EOF) {
     switch(type) {
       case NUMBER:
-        push(atof(s));
+        num_string = atof(s) * sign;
+        push(num_string);
         break;
       case '+':
         push(pop() + pop());
@@ -82,18 +86,30 @@ void ungetch(int);
 
 int getop(char s[])
 {
-  int i, c;
+  sign = 1.0;
+  int i, c, next;
 
   while((s[0] = c = getch()) == ' ' || c == '\t') {
     ;
   }
 
   s[1] = '\0';
-  if (!isdigit(c) && c != '.') {
-    return c;
-  }
 
   i = 0;
+  if (!isdigit(c) && c != '.') {
+
+    if (c == '-') {
+      if (isdigit(next = getch())) {
+        c = next;
+        s[i++] = c;
+        sign = -1.0;
+      } else {
+        return c;
+      }
+    } else {
+      return c;
+    }
+  }
 
   if (isdigit(c)) {
     while(isdigit(s[++i] = c = getch())) {
