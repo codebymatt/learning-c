@@ -11,20 +11,25 @@ double getfloat(double *pn)
 {
   int c, sign;
 
-  while(isspace(c = getch()))
+  while (isspace(c = getch()))
     ;
 
-  if(!isdigit(c) && c != EOF && c != '+' && c != '-') {
+  if (!isdigit(c) && c != EOF && c != '+' && c != '-')
+  {
     ungetch(c);
     return 0;
   }
 
   sign = (c == '-') ? -1 : 1;
-  if (c == '+' || c == '-') {
+  if (c == '+' || c == '-')
+  {
     int next = getch();
-    if (isdigit(next)) {
+    if (isdigit(next))
+    {
       c = next;
-    } else {
+    }
+    else
+    {
       ungetch(next);
       ungetch(c);
       return 0.0;
@@ -34,24 +39,31 @@ double getfloat(double *pn)
   int tracking_decimals = 0;
   int decimal_count = 0;
 
-  for (*pn = 0; isdigit(c) || c == '.'; c = getch()) {
-    if (c == '.') {
+  for (*pn = 0.0; isdigit(c) || c == '.'; c = getch())
+  {
+    if (c == '.')
+    {
       tracking_decimals = 1;
-    } else {
-      if (tracking_decimals) {
+    }
+    else
+    {
+      if (tracking_decimals)
+      {
         decimal_count++;
       }
-      *pn = 10 * *pn + (c - '0');
+      *pn = (10 * *pn) + (c - '0');
     }
   }
 
-  while(decimal_count > 0) {
+  while (decimal_count > 0)
+  {
     *pn /= 10;
     decimal_count--;
   }
 
   *pn *= sign;
-  if (c != EOF) {
+  if (c != EOF)
+  {
     ungetch(c);
   }
 
