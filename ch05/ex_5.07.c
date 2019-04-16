@@ -12,7 +12,6 @@ int readlines(char lines[][MAXLEN], int maxlines)
   int len, nlines;
   nlines = 0;
 
-  // char *p = lines;
   char line[MAXLEN];
 
   size_t buf_size = MAXLEN;
