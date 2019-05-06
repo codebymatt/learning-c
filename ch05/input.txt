@@ -1,10 +1,10 @@
-abc
-def
-ghi
-jkl
 mno
-pqr
+ghi
+abc
+jkl
 stu
+def
+pqr
 vwx
 yz
 123
