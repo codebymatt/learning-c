@@ -1,6 +1,10 @@
+// Add the option -f to fold upper and lower case together, so that case distinctions are
+// not made during sorting; for example, a and A compare equal.
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define MAXLINES 5000
 #define LINELENGTH 4096
@@ -10,15 +14,17 @@ int my_getline(char s[], int lim);
 int readlines(char *lineptr[], int nlines, int line_length);
 void writelines(char *lineptr[], int nlines);
 
-void my_qsort(void *lineptr[], int left, int right, int (*comp)(void *, void *, int), int reversed);
-int numcmp(char *, char *, int);
-int my_strcmp(const void *, const void *, int);
+void my_qsort(void *lineptr[], int left, int right, int (*comp)(void *, void *, int, int), int reversed, int fold);
+int numcmp(char *, char *, int, int);
+int my_strcmp(const void *, const void *, int, int);
+void strlwr(char[]);
 
 int main(int argc, char *argv[])
 {
   int nlines, c;
   int numeric = 0;
   int reverse = 0;
+  int fold = 0;
   unsigned long line_length = LINELENGTH;
 
   while (--argc > 0 && ((*(++argv))[0] == '-'))
@@ -32,6 +38,8 @@ int main(int argc, char *argv[])
     case 'r':
       reverse = 1;
       break;
+    case 'f':
+      fold = 1;
     default:
       break;
     }
@@ -39,7 +47,7 @@ int main(int argc, char *argv[])
 
   if ((nlines = readlines(lineptr, MAXLINES, line_length)) >= 0)
   {
-    my_qsort((void **)lineptr, 0, nlines - 1, numeric ? numcmp : my_strcmp, reverse);
+    my_qsort((void **)lineptr, 0, nlines - 1, numeric ? numcmp : my_strcmp, reverse, fold);
     writelines(lineptr, nlines);
     return 0;
   }
@@ -55,7 +63,10 @@ int my_getline(char s[], int lim)
   int c, i;
 
   for (i = 0; i < lim - 1 && (c = getchar()) != EOF && c != '\n'; i++)
+  {
     s[i] = c;
+  }
+
   if (c == '\n')
   {
     s[i++] = c;
@@ -94,7 +105,7 @@ void writelines(char *lineptr[], int nlines)
   }
 }
 
-void my_qsort(void *v[], int left, int right, int (*comp)(void *, void *, int), int reversed)
+void my_qsort(void *v[], int left, int right, int (*comp)(void *, void *, int, int), int reversed, int fold)
 {
   int i, last;
   void swap(void *[], int, int);
@@ -108,25 +119,42 @@ void my_qsort(void *v[], int left, int right, int (*comp)(void *, void *, int), 
   last = left;
   for (i = left + 1; i <= right; i++)
   {
-    if ((*comp)(v[i], v[left], reversed) < 0)
+    if ((*comp)(v[i], v[left], reversed, fold) < 0)
     {
       swap(v, ++last, i);
     }
   }
 
   swap(v, left, last);
-  my_qsort(v, left, last - 1, comp, reversed);
-  my_qsort(v, last + 1, right, comp, reversed);
+  my_qsort(v, left, last - 1, comp, reversed, fold);
+  my_qsort(v, last + 1, right, comp, reversed, fold);
 }
 
-int numcmp(char *s1, char *s2, int reversed)
+int numcmp(char *s1, char *s2, int reversed, int fold)
 {
   double v1, v2;
   int result = 0;
   reversed = reversed ? -1 : 1;
 
-  v1 = atof(s1);
-  v2 = atof(s2);
+  char copy_1[LINELENGTH];
+  char copy_2[LINELENGTH];
+
+  if (fold)
+  {
+    strcpy(copy_1, s1);
+    strcpy(copy_2, s2);
+    strlwr(copy_1);
+    strlwr(copy_2);
+
+    v1 = atof(copy_1);
+    v2 = atof(copy_2);
+  }
+  else
+  {
+    v1 = atof(s1);
+    v2 = atof(s2);
+  }
+
   if (v1 < v2)
   {
     result = -1;
@@ -139,13 +167,36 @@ int numcmp(char *s1, char *s2, int reversed)
   return result * reversed;
 }
 
-int my_strcmp(const void *p1, const void *p2, int reversed)
+int my_strcmp(const void *p1, const void *p2, int reversed, int fold)
 {
   const char *s1 = p1;
   const char *s2 = p2;
+
   reversed = reversed ? -1 : 1;
 
+  if (fold)
+  {
+    char copy_1[LINELENGTH];
+    char copy_2[LINELENGTH];
+    strcpy(copy_1, s1);
+    strcpy(copy_2, s2);
+
+    strlwr(copy_1);
+    strlwr(copy_2);
+
+    return (strcmp(copy_1, copy_2) * reversed);
+  }
+
   return strcmp(s1, s2) * reversed;
+}
+
+void strlwr(char str[])
+{
+  while (*str != '\0')
+  {
+    *str = tolower(*str);
+    str++;
+  }
 }
 
 void swap(void *v[], int i, int j)
