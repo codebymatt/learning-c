@@ -1,0 +1,4 @@
+char **argv
+char (*(*x())[])()
+int *daytab[13]
+void (*comp)()
