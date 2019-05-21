@@ -1,4 +1,6 @@
 char **argv
-char (*(*x())[])()
-int *daytab[13]
+char (*(*x())[)()
+int *daytab[13
 void (*comp)()
+void (*comp())
+char **

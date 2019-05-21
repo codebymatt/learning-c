@@ -1,3 +1,8 @@
+// Doesn't handle invalid declarations: make it recover from input errors,
+// Taking 'handling error' to mean recovering from missing bracket or parentheses while still
+// making an educated guess at the declaration, and returning the declaration without a NAME
+// if it's not present.
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -27,12 +32,20 @@ int main()
   {
     strcpy(datatype, token);
     out[0] = '\0';
+    name[0] = '\0';
     dcl();
     if (tokentype != '\n')
     {
       printf("syntax error\n");
     }
-    printf("%s: %s %s\n", name, out, datatype);
+    if (name[0] != '\0')
+    {
+      printf("%s: %s %s\n\n", name, out, datatype);
+    }
+    else
+    {
+      printf("Unspecified name: %s %s\n\n", out, datatype);
+    }
   }
 }
 
@@ -60,7 +73,8 @@ void dirdcl(void)
     dcl();
     if (tokentype != ')')
     {
-      printf("error: missing )\n");
+      printf("error: missing ). Adding one in, this may change the results\n");
+      tokentype = ')';
     }
   }
   else if (tokentype == NAME)
@@ -113,10 +127,29 @@ int gettoken(void)
   }
   else if (c == '[')
   {
-    for (*p++ = c; (*p++ = getch()) != ']';)
+    char temp;
+    for (*p++ = c; (temp = getch()) != ']' && temp != '\n';)
     {
-      ;
+      *p++ = temp;
     }
+    if (temp == '\n')
+    {
+      ungetch(temp);
+      printf("Missing ']', inserting one. This may change results\n");
+      *p++ = ']';
+    }
+    else
+    {
+      *p++ = ']';
+    }
+    // if (*p == '\n')
+    // p++;
+    // SOMETHING IS MESSY HERE
+    // if (*p != ']')
+    // {
+    //   ungetch(']');
+    //   printf("Missing ']', inserting one. This may change results\n");
+    // }
     *p = '\0';
     return tokentype = BRACKETS;
   }
