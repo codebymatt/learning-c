@@ -136,20 +136,8 @@ int gettoken(void)
     {
       ungetch(temp);
       printf("Missing ']', inserting one. This may change results\n");
-      *p++ = ']';
     }
-    else
-    {
       *p++ = ']';
-    }
-    // if (*p == '\n')
-    // p++;
-    // SOMETHING IS MESSY HERE
-    // if (*p != ']')
-    // {
-    //   ungetch(']');
-    //   printf("Missing ']', inserting one. This may change results\n");
-    // }
     *p = '\0';
     return tokentype = BRACKETS;
   }
@@ -168,9 +156,6 @@ int gettoken(void)
     return tokentype = c;
   }
 }
-
-// char buffer;
-// int buffer_empty = 0;
 
 #define BUFSIZE 100
 
