@@ -1,0 +1,9 @@
+#define CONST 100
+#define CONST_2 200
+
+int main() {
+  // Comment line
+  int a = 40;
+  a = a/2;
+  return 0;
+}
