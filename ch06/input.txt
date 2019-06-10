@@ -5,5 +5,21 @@ int main() {
   // Comment line
   int a = 40;
   a = a/2;
+
+  int abcdef_g = 0;
+  abcdef_g++;
+  // distraction abcdef_g!
+  abcdef_g--;
+  int abcdef_h = 0;
+  abcdef_h += abcdef_h;
+  if (abcdef_g > 3) {
+    abcdef_g--;
+  }
+
+  char other_variable;
+  if (other_variable == 'h') {
+    other_variable = 'r';
+  }
+
   return 0;
 }
