@@ -25,9 +25,12 @@ void treeprint(struct tnode *);
 
 int main(int argc, char *argv[])
 {
-  if (argc > 1) {
-    while(--argc > 0) {
-      if (strcmp(*(++argv), "-l")) {
+  if (argc > 1)
+  {
+    while (--argc > 0)
+    {
+      if (strcmp(*(++argv), "-l"))
+      {
         required_len = atoi(*argv);
       }
     }
@@ -87,8 +90,10 @@ void treeprint(struct tnode *p)
   if (p != NULL)
   {
     treeprint(p->left);
-    if (strlen(p->word) >= required_len) {
-      if ((strncmp(p->word, current_group_prefix, required_len) != 0)) {
+    if (strlen(p->word) >= required_len)
+    {
+      if ((strncmp(p->word, current_group_prefix, required_len) != 0))
+      {
         strcpy(current_group_prefix, get_str_prefix(my_strdup(p->word)));
         printf("\nGROUP BEGINNING WITH '%s'\n", current_group_prefix);
       }
@@ -115,17 +120,15 @@ char *my_strdup(char *s)
   return p;
 }
 
-char *get_str_prefix(char *original) {
+char *get_str_prefix(char *original)
+{
   char *trimmed;
   trimmed = (char *)malloc(strlen(original) + 1);
   int counter = 0;
-  while (counter < required_len) {
+  while (counter < required_len)
+  {
     trimmed[counter++] = *original++;
   }
 
   return trimmed;
 }
-
-// int my_strcmp(word) {
-
-// }
