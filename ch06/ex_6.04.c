@@ -111,5 +111,5 @@ int compare_node_count(const void *n1, const void *n2)
   struct tnode *node_2 = *(struct tnode **)n2;
   int count_1 = node_1->count, count_2 = node_2->count;
 
-  return (count_1 - count_2);
+  return (count_2 - count_1);
 }
