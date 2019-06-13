@@ -1,4 +1,4 @@
-#define CONST 100
+#define a INSERT
 #define CONST_2 200
 
 int main() {
@@ -6,13 +6,17 @@ int main() {
   int a = 40;
   a = a/2;
 
+  printf("Const is: ", CONST_2);
+
   int abcdef_g = 0;
   abcdef_g++;
+
   // distraction abcdef_g!
   abcdef_g--;
   int abcdef_h = 0;
   abcdef_h += abcdef_h;
-  if (abcdef_g > 3) {
+
+  if (abcdef_g > CONST_2) {
     abcdef_g--;
   }
 
